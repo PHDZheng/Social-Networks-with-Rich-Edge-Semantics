@@ -1,0 +1,8 @@
+This dataset was originally published in:
+
+Negyessy L., Nepusz T., Kocsis L., Bazso F.: Prediction of the main
+cortical areas and connections involved in the tactile function of the
+visual cortex by network analysis. Eur J Neurosci, 23(7): 1919-1930, 2006.
+
+If you happen to use this dataset in a paper, please cite the reference
+mentioned above.
