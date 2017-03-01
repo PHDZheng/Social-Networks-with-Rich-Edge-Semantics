@@ -1,0 +1,7 @@
+This dataset was originally published in:
+
+Nepusz T., Petroczi A., Negyessy L., Bazso F.: Fuzzy communities and the
+concept of bridgeness in complex networks. Physical Review E 77:016107, 2008.
+
+If you happen to use this dataset in a paper, please cite the reference
+mentioned above.
