@@ -89,6 +89,7 @@ for i = 3:14
 %title('Embedding of our BNScut');
 axis off;
 
+%%%%%%%%%% compute AER ANR MER values
  pDinv=zeros(n,1);
     nDinv=zeros(n,1);
     for i=1:n
