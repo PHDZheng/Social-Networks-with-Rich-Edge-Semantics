@@ -7,16 +7,16 @@ negW = csvread('gamaNeg.csv');
 names = textread('name.csv', '%s');
 
 n=size(posW,2);
-Dpos=diag(sum(posW,2));
-Dneg=diag(sum(negW,2));
-
-D=Dpos+Dneg;
+Dpos=sum(posW,2);
+Dneg=sum(negW,2);
+D=diag(Dpos+Dneg);
 D2=zeros(n,n);
 for i=1:n
     if D(i,i)~=0
         D2(i,i)=1/D(i,i)^.5;
     end
 end
+
 L=D-posW+negW;
 Lsym=D2*L*D2;
 [u1,e] = eig(Lsym);
@@ -88,3 +88,61 @@ for i = 3:14
     end
 %title('Embedding of our BNScut');
 axis off;
+
+ pDinv=zeros(n,1);
+    nDinv=zeros(n,1);
+    for i=1:n
+        if Dpos(i,1)>0;
+                pDinv(i,1)=1/Dpos(i,1);
+        end
+        if Dneg(i,1)>0
+                nDinv(i,1)=1/Dneg(i,1);
+        end
+    end
+    posW2=posW;
+    posW2(posW2>0)=1;
+    negW2=negW;
+    negW2(negW2>0)=1;   
+dimensions=3;
+    dis=sparse(n,n);
+    for i=1:n-1
+        for j=i+1:n
+            if posW(i,j)~=0 || negW(i,j)~=0
+                dis(i,j)=norm(u1(i,1:dimensions)-u1(j,1:dimensions));
+            end
+        end
+    end    
+    dis=dis+dis';
+    AER=(sum(sum(posW.*dis)) / sum(Dpos)) / (sum(sum(negW.*dis)) / sum(Dneg));   
+    ANR= (sum(sum(posW.*dis,2).*pDinv) / nnz(Dpos)) / (sum(sum(negW.*dis,2).*nDinv) / nnz(Dneg));
+    MER= median( nonzeros(dis.*posW2)) / median( nonzeros(dis.*negW2));
+    z(1,:)=[AER ANR MER];
+    
+        dis=sparse(n,n);
+    for i=1:n-1
+        for j=i+1:n
+            if posW(i,j)~=0 || negW(i,j)~=0
+                dis(i,j)=norm(u2(i,1:dimensions)-u2(j,1:dimensions));
+            end
+        end
+    end    
+    dis=dis+dis';
+    AER=(sum(sum(posW.*dis)) / sum(Dpos)) / (sum(sum(negW.*dis)) / sum(Dneg));   
+    ANR= (sum(sum(posW.*dis,2).*pDinv) / nnz(Dpos)) / (sum(sum(negW.*dis,2).*nDinv) / nnz(Dneg));
+    MER= median( nonzeros(dis.*posW2)) / median( nonzeros(dis.*negW2));
+    z(2,:)=[AER ANR MER];
+    
+        dis=sparse(n,n);
+    for i=1:n-1
+        for j=i+1:n
+            if posW(i,j)~=0 || negW(i,j)~=0
+                dis(i,j)=norm(u3(i,1:dimensions)-u3(j,1:dimensions));
+            end
+        end
+    end    
+    dis=dis+dis';
+    AER=(sum(sum(posW.*dis)) / sum(Dpos)) / (sum(sum(negW.*dis)) / sum(Dneg));   
+    ANR= (sum(sum(posW.*dis,2).*pDinv) / nnz(Dpos)) / (sum(sum(negW.*dis,2).*nDinv) / nnz(Dneg));
+    MER= median( nonzeros(dis.*posW2)) / median( nonzeros(dis.*negW2));
+    z(3,:)=[AER ANR MER];
+    z=full(z);
