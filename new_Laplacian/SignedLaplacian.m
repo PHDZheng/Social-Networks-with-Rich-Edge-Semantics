@@ -60,26 +60,14 @@ for i=1:n
         D2(i,i)=1/D(i,i)^.5;
     end
 end
-    pDinv=sparse(n,n);
-    nDinv=sparse(n,n);
-       for i=1:n
-        if D(i,i)~=0
-            D2(i,i)=1/D(i,i)^.5;
-            if Dpos(i,i)>0;
-                pDinv(i,i)=1/Dpos(i,i);
-            end
-            if Dneg(i,i)>0
-                nDinv(i,i)=1/Dneg(i,i);
-            end
-        end
-    end
+
 %unnormalized graph-Laplacian
 if (nargin < 3) || isempty(type)||strcmp(type,'un') || strcmp(type,'Un')||strcmp(type,'UN')
     display('Unnormalized signed Laplacian decomposition');
     L=Dpos-posW-Dneg+negW;
     tempvalue=max(Dpos(:));
     if k==n
-        [Vector,eigenvalue]=eig(L);
+        [Vector,eigenvalue]=eig(full(L));
         e=diag(eigenvalue);
         [e,IXY]=sort(e,1,'ascend');
         Vector=Vector(:,IXY);
@@ -102,8 +90,9 @@ for i=1:n
     end
 end
     Lsym=D2*L*D2;  %L=D^(-0.5)*L*D^(-0.5);
+    Lsym=(Lsym+Lsym')/2;
     if k==n
-        [Vector,eigenvalue]=eig(Lsym);
+        [Vector,eigenvalue]=eig(full(Lsym));
         e=diag(eigenvalue);
         [e,IXY]=sort(e,1,'ascend');
         Vector=Vector(:,IXY);
@@ -127,8 +116,9 @@ for i=1:n
     end
 end
     Lsym=D2*L*D2;  %L=D^(-0.5)*L*D^(-0.5);
+    Lsym=(Lsym+Lsym')/2;
     if k==n
-        [Vector,eigenvalue]=eig(Lsym);
+        [Vector,eigenvalue]=eig(full(Lsym));
         e=diag(eigenvalue);
         [e,IXY]=sort(e,1,'ascend');
         Vector=Vector(:,IXY);
@@ -142,9 +132,5 @@ end
 else
     error('Type can not be indentified.');
 end
-
-
-
-
 
 
