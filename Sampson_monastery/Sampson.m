@@ -13,8 +13,8 @@ classes=['k';'b';'b';'b';'b';'b';'k';'m';'m';'m';'m';'m';'m';'m';'k';'c';'c';'c'
 %%%%% the Loyalists is evident.
 pos=pos(:,1:18);
 neg=neg(:,1:18);
-pos(pos>=1)=1;
-neg(neg>=1)=1;
+%pos(pos>=1)=1;
+%neg(neg>=1)=1;
 posW=pos+pos';
 negW=neg+neg';
 n=size(posW,2);
