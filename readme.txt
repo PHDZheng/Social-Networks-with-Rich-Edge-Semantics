@@ -2,6 +2,7 @@ The Matlab codes are the library functions and examples that implement the spect
 
 The file 'new_Laplacian' provides proposed Matlab library functions.
 
+The file 'figs_color' provides the color version figures corresponding to the book.
 
 Dataset 'Florentine_families' is a typed directed network. Examples in Chapter 4, 5 and 6.
 
